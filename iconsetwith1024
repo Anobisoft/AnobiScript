@@ -1,0 +1,49 @@
+[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [FILE]"; exit 1; }
+[ -e $fpath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 
+logfile=${0##*/}.log
+
+{
+echo $0 $@
+
+root=${fpath%/*}
+fnx=${fpath##*/}
+fname=${fnx%.*}
+fext=${fnx#*.}
+
+#echo "DEBUG $root // $fname // $fext"
+
+dir=$root/AppIcon.appiconset
+mkdir -p $dir
+
+cnt=${0%/*}/iconsetwith1024json/Contents.json
+cp $cnt $dir
+
+icn1x=( 20 29 40 76 )
+icn2x=( 20 29 40 76 83.5 )
+icn3x=( 20 29 40 60 )
+
+declare -A sizes
+sizes[1]=${icn1x[@]}
+sizes[2]=${icn2x[@]}
+sizes[3]=${icn3x[@]}
+
+for i in "${!sizes[@]}"
+do
+	isz=${sizes[$i]}
+	for sz in ${isz[@]}
+	do
+		echo "$sz * $i" | bc | sed 's/\.0$//'
+	done
+done | sort -u | while read sz
+do
+	sips -z $sz $sz $fpath --out $dir/Icon-${sz}x${sz}.$fext
+done
+
+echo
+echo "$dir"
+ls -lh $dir
+
+} &> $logfile
+
+echo -n 'OK '
+wc -c $logfile
