@@ -2,7 +2,7 @@
 iOS Developer Helpers
 
 **ВНИМАНИЕ!** Скрипты написаны под GNU bash, версия 4.4.5(1)-release и часто испобльзуют GNU версии утилит. Настоятельно рекомендую использовать только самое лучшее!
-<spoiler>
+
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
@@ -18,7 +18,6 @@ brew install gzip
 brew install diffutils
 brew install wget
 ```
-</spoiler>
 
 ---
 
