@@ -1,0 +1,6 @@
+[ -z "$%" ] && exit 0
+
+for fn in $@
+do
+echo $fn $(date -d@$(stat -c%W $fn) +%Y-%m-%d)
+done
