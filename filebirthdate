@@ -2,5 +2,5 @@
 
 for fn in $@
 do
-echo $fn $(date -d@$(stat -c%W $fn) +%Y-%m-%d)
+echo $fn:$(date -d@$(stat -c%W $fn) +%Y-%m-%d)
 done
