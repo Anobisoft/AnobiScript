@@ -18,11 +18,19 @@ brew install gzip
 brew install diffutils
 brew install wget
 ```
-
 ---
 
-## killxcode - когда ничего не помогает
-прибивает :hammer: жестко (-9) все процессы xcode
+## iconsetwith1024 - создает минимально необходимый набор иконок AppIcon.appiconset в папке с картинкой из параметра
+**Важно!** требует наличия папки `iconsetwith1024json` с уже настроенным `Contents.json`
+
+```
+21:38:14 pletnev@WS0441 ~ # iconsetwith1024 ~/Documents/Resources/MyProject/icon-iOS_1024-itunes.png 
+OK 3911 iconsetwith1024.log
+21:39:12 pletnev@WS0441 ~ # ls ~/Documents/Resources/MyProject/AppIcon.appiconset/Contents.json     Icon-180x180.png  Icon-58x58.png  Icon-87x87.png
+Icon-120x120.png  Icon-20x20.png    Icon-60x60.png
+Icon-152x152.png  Icon-29x29.png    Icon-76x76.png
+Icon-167x167.png  Icon-40x40.png    Icon-80x80.png
+```
 
 ---
 
@@ -38,6 +46,21 @@ brew install wget
 
 ## cleanup_provision_profiles - вычищает все provision профайлы из xcode
 Просто запускаем и радуемся.
+
+---
+
+## killxcode - когда ничего не помогает
+прибивает :hammer: жестко (-9) все процессы xcode
+
+---
+
+## filebirthdate - выводит даты создания файлов
+```
+filebirthdate ./D*
+./Desktop:2015-08-13
+./Documents:2015-07-09
+./Downloads:2015-07-09
+```
 
 ---
 
