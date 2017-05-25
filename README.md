@@ -1,7 +1,7 @@
 # AnobiScript
 iOS Developer Helpers
 
-**ВНИМАНИЕ!** Скрипты написаны под GNU bash, версия 4.4.5(1)-release и часто испобльзуют GNU версии утилит. Настоятельно рекомендую использовать только самое лучшее!
+**ВНИМАНИЕ!** Скрипты написаны под GNU bash, версия 4.4.5(1)-release и часто используют GNU версии утилит. Настоятельно рекомендую использовать только самое лучшее!
 
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
