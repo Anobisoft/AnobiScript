@@ -17,6 +17,9 @@ brew install gnu-tar --with-default-names
 brew install gzip
 brew install diffutils
 brew install wget
+
+sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+chsh -s /usr/local/bin/bash
 ```
 ---
 
