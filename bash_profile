@@ -4,6 +4,5 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/AnobiScripts
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
-alias awk=gawk
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
