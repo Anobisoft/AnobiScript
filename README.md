@@ -27,9 +27,9 @@ chsh -s /usr/local/bin/bash
 **Важно!** требует наличия папки `iconsetwith1024json` с уже настроенным `Contents.json`
 
 ```
-21:38:14 pletnev@WS0441 ~ # iconsetwith1024 ~/Documents/Resources/MyProject/icon-iOS_1024-itunes.png 
+21:38:14 pletnev@WS0256 ~ # iconsetwith1024 ~/Documents/Resources/MyProject/icon-iOS_1024-itunes.png 
 OK 3911 iconsetwith1024.log
-21:39:12 pletnev@WS0441 ~ # ls ~/Documents/Resources/MyProject/AppIcon.appiconset/Contents.json     Icon-180x180.png  Icon-58x58.png  Icon-87x87.png
+21:39:12 pletnev@WS0256 ~ # ls ~/Documents/Resources/MyProject/AppIcon.appiconset/Contents.json     Icon-180x180.png  Icon-58x58.png  Icon-87x87.png
 Icon-120x120.png  Icon-20x20.png    Icon-60x60.png
 Icon-152x152.png  Icon-29x29.png    Icon-76x76.png
 Icon-167x167.png  Icon-40x40.png    Icon-80x80.png
