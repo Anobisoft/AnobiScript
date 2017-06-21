@@ -1,0 +1,21 @@
+#
+#  refactor
+#  AnobiScript
+#
+#  Created by Stanislav Pletnev on 2017-06-21
+#  Copyright © 2017 Anobisoft. All rights reserved.
+#
+
+grep -lIRE "$1" | while read file
+do
+	tmp=$(mktemp)
+	awk '
+{
+	gsub("'$1'","'$2'",$0);
+	print $0;
+}
+' "$file" > $tmp
+
+mv $tmp "$file"
+	
+done
