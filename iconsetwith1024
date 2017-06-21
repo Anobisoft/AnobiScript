@@ -1,3 +1,11 @@
+#
+#  iconsetwith1024
+#  AnobiScript
+#
+#  Created by Stanislav Pletnev on 2017-05-16
+#  Copyright © 2017 Anobisoft. All rights reserved.
+#
+
 [ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [FILE]"; exit 1; }
 [ -e $fpath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 
 logfile=${0##*/}.log

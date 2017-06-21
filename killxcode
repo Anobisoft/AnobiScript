@@ -1,9 +1,9 @@
 #
+#  killxcode
+#  AnobiScript
 #
-#
-#
-#
-#
+#  Created by Stanislav Pletnev on 2017-05-13
+#  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
 ps ax | grep -i xcode | grep -v grep | awk '{ print $1; }' | sed ':a;N;$!ba;s/\n/ /g' | xargs kill -9

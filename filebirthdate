@@ -1,9 +1,9 @@
 #
+#  filebirthdate
+#  AnobiScript
 #
-#
-#
-#
-#
+#  Created by Stanislav Pletnev on 2017-05-19
+#  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
 [ -z "$%" ] && exit 0

@@ -2,7 +2,7 @@
 #  ASHeaderFix
 #  AnobiScript
 #
-#  Created by Stanislav Pletnev on 2017-03-15
+#  Created by Stanislav Pletnev on 2017-05-19
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
@@ -23,7 +23,7 @@ $symbol  ${fn##*/}
 $symbol  ${PWD##*/}
 $symbol
 $symbol  Created by $author on $(date -d@$created +%Y-%m-%d)
-$symbol  Copyright © '$(date -d@$created +%Y)' Anobisoft. All rights reserved.
+$symbol  Copyright © $(date -d@$created +%Y) Anobisoft. All rights reserved.
 $symbol
 " > $tmp
 	tail -n$(($(wc -l $fn | awk '{ print $1; }')-$(wc -l $tmp | awk '{ print $1; }'))) $fn >> $tmp
