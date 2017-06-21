@@ -1,3 +1,11 @@
+#
+#
+#
+#
+#
+#
+#
+
 function cc() {
 	eval $(echo "$*" | sed 's/^/echo -e /; s/<color=\([a-zA-Z]\{1,\}\)>/\\\\e[${color[\1]}m/g; s/<\/color>/\\\\e[${color[Clear]}m/g; s/$/\\\\e[${color[Clear]}m/')
 }

@@ -1,1 +1,10 @@
+#
+#  cleanup_provision_profiles  
+#  AnobiScript
+#
+#  Created by Stanislav Pletnev on 2017-06-21
+#  Copyright © 2017 Anobisoft. All rights reserved.
+#
+
+
 find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '*.mobileprovision' -delete
