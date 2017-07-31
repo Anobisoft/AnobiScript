@@ -4,6 +4,9 @@ iOS Developer Helpers
 **ВНИМАНИЕ!** Скрипты написаны под GNU bash, версия 4.4.5(1)-release и часто используют GNU версии утилит. Настоятельно рекомендую использовать только самое лучшее!
 
 ```
+\curl -sSL https://get.rvm.io | bash -s stable
+rvm install ruby-2.4.1
+rvm use ruby-2.4.1 --default
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 brew install coreutils
