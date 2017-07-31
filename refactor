@@ -11,7 +11,7 @@ do
 	tmp=$(mktemp)
 	awk '
 {
-	gsub("'$1'","'$2'",$0);
+	gsub("'"$1"'","'"$2"'",$0);
 	print $0;
 }
 ' "$file" > $tmp
