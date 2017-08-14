@@ -26,8 +26,7 @@ chsh -s /usr/local/bin/bash
 ```
 ---
 
-![NEW](http://findicons.com/files/icons/1681/siena/128/label_new_red.png)
-## xcodeprojfix_deviceswitchbutton - исправляет баг отсутствия кнопок iPad/iPhone в секции Deployment Info везде где найдет
+## 🆕 xcodeprojfix_deviceswitchbutton - исправляет баг отсутствия кнопок iPad/iPhone в секции Deployment Info везде где найдет
 
 ---
 
