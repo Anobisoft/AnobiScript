@@ -26,6 +26,11 @@ chsh -s /usr/local/bin/bash
 ```
 ---
 
+![NEW](http://findicons.com/files/icons/1681/siena/128/label_new_red.png)
+## xcodeprojfix_deviceswitchbutton - исправляет баг отсутствия кнопок iPad/iPhone в секции Deployment Info везде где найдет
+
+---
+
 ## iconsetwith1024 - создает минимально необходимый набор иконок AppIcon.appiconset в папке с картинкой из параметра
 **Важно!** требует наличия папки `iconsetwith1024json` с уже настроенным `Contents.json`
 
