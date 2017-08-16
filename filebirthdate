@@ -6,9 +6,10 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ -z "$%" ] && exit 0
+[ "$#" -gt 0 ] || { echo "${0##*/}: missing file operand"; exit 1; }
 
 for fn in $@
 do
-echo $fn:$(date -d@$(stat -c%W $fn) +%Y-%m-%d)
+st=$(stat -c%W $fn)
+[ -z "$st" ] || echo $fn:$(date -d@$st +%Y-%m-%d)
 done

@@ -6,6 +6,10 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
+[ ${BASH_VERSINFO[0]} -ge "4" ] || { echo "ERROR(8) bash 4 needed"; exit 8; }
+[ $(sed --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU sed needed'; exit 9; }
+
+
 function cc() {
 	eval $(echo "$*" | sed 's/^/echo -e /; s/<color=\([a-zA-Z]\{1,\}\)>/\\\\e[${color[\1]}m/g; s/<\/color>/\\\\e[${color[Clear]}m/g; s/$/\\\\e[${color[Clear]}m/')
 }

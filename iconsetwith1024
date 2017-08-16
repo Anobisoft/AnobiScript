@@ -6,8 +6,16 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [FILE]"; exit 1; }
+[ ${BASH_VERSINFO[0]} -ge "4" ] || { echo 'ERROR(8) bash 4 needed'; exit 8; }
+#[ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed'; exit 9; }
+
+[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [1024x1024 PNG FILE]"; exit 1; }
 [ -e $fpath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 
+pixelHeight=$(sips -g pixelHeight $fpath | tail -1 | grep -c "[^0-9]1024$")
+pixelWidth=$(sips -g pixelWidth $fpath | tail -1 | grep -c "[^0-9]1024$")
+[ "$((${pixelHeight}+${pixelWidth}))" -eq 2 ] || { echo "ERROR(3) Image size must be 1024x1024"; exit 3; }
+
+
 logfile=${0##*/}.log
 
 {

@@ -6,6 +6,9 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
+[ $(stat --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU coreutil needed'; exit 9; }
+[ $(sed --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU sed needed'; exit 9; }
+
 [ -n "$1" ] && symbol=$1 || symbol='//'
 
 [ "$1" == "#" ] && a=$(stat -c %n:%A * | grep x | awk -F":" '{ print $1; }') || a=$(find . -name '*.[hm]' -o -name '*.swift')
