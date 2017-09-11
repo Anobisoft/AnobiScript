@@ -8,4 +8,4 @@
 
 [ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)"; exit 1; }
 
-find . -name *"$1"* -exec bash -c 'x="{}"; mv "{}" "${x/'$1'/'$2'}"' \;
+find . -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "{}" "${x/'$1'/'$2'}"' \;
