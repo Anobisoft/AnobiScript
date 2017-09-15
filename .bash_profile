@@ -5,7 +5,7 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:~/Anobisoft/AnobiScript:~/AM
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias podexupd='pod update --no-repo-update --project-directory=Example'
-alias openws='find -name ${PWD##*/}.xcworkspace -exec open {} \;'
+alias openws='find -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
 alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '*.mobileprovision' -delete'
 alias repod='pod update --no-repo-update'
 
