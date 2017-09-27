@@ -6,4 +6,3 @@ alias openws='find -name *.xcworkspace -and ! -name project.xcworkspace -exec op
 alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '*.mobileprovision' -delete'
 alias repod='pod update --no-repo-update'
 
-

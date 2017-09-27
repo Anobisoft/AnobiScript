@@ -1,8 +1,15 @@
 function rgb2hex() {
-	while read r g b
-	do
-		echo "obase=16; (($r * 256 + $g) * 256) + $b" | bc 
-	done
+	if [ $# -gt 0 ];
+	then
+		echo ololo
+		echo "$@" | rgb2hex; 
+	else
+		echo wtf
+		while read r g b
+		do
+			echo "obase=16; (($r * 256 + $g) * 256) + $b" | bc 
+		done
+	fi
 }
 
 function hex2rgb {
