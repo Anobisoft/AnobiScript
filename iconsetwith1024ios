@@ -1,5 +1,5 @@
 #
-#  iconsetwith1024
+#  iconsetwith1024ios
 #  AnobiScript
 #
 #  Created by Stanislav Pletnev on 2017-05-16
@@ -31,7 +31,7 @@ fext=${fnx#*.}
 dir=$root/AppIcon.appiconset
 mkdir -p $dir
 
-cnt=${0%/*}/iconsetwith1024json/Contents.json
+cnt=${0%/*}/iOS_iconset_json/Contents.json
 cp $cnt $dir
 
 icn1x=( 20 29 40 76 )
@@ -54,6 +54,8 @@ done | sort -u | while read sz
 do
 	sips -z $sz $sz $fpath --out $dir/Icon-${sz}x${sz}.$fext
 done
+
+cp $fpath $dir/ios-marketing1024.png
 
 echo
 echo "$dir"
