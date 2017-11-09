@@ -1,0 +1,20 @@
+sleeptime=$1
+getmethod_config=$2
+postmethod_config=$3
+suffix=$([ -n "$4" ] && echo "_$4")
+
+wd=${0%/*}
+if [ "$wd" == "$0" ]; then wd='.'; fi
+
+while :;
+do
+	webtest_get$suffix $getmethod_config
+	webtest_post$suffix $postmethod_config
+
+	for i in $(seq 0 99);
+	do
+		printf '.'
+		sleep $(echo "scale=2; $sleeptime / 100.0" | bc);
+	done;
+	date +'%F %T';
+done

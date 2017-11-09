@@ -1,0 +1,44 @@
+[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [config]"; exit 1; }
+[ -e $fpath ] || { echo "ERROR(2) config file not found ($1)"; exit 2; } 
+
+boudary=$(uuidgen)
+tmp=$(mktemp)
+wd=${0%/*}
+tabs 4
+
+awk -F";" '{for (i = 1; i <= NF; i++) printf $i " "; print ""}' $1 > $tmp
+while read link datafile timeout timax testlimit pattern expected
+do
+	echo "$link POST:"
+#	echo "[DEBUG] config: $link;$datafile;$timeout;$timax;$testlimit;$pattern;$expected"
+	data=$(cat $datafile)
+	echo "$data"
+	
+	resp=$(curl -sw "$boudary%{time_total}" --connect-timeout $timeout -m $timax -d "$data" "$link")
+#	echo "[DEBUG] resp:\n$resp"
+
+	respTime=$(echo $resp | grep -o "$boudary.*" | sed "s/$boudary//; s/\,/\./; s/$/*1000.0/;" | bc -l)
+#	echo "[DEBUG] respTime'$respTime'"
+
+	respTimeOK=$(echo $respTime"<($testlimit*1000)" | bc -l)
+#	echo "[DEBUG] respTimeOK'$respTimeOK'"
+
+	respTimeStr=$(sed 's/.0000//' <<< $respTime)
+#	echo "[DEBUG] respTimeStr'$respTimeStr'"
+
+	patternCount=$(grep -oF "$pattern" <<< $resp | wc -l)
+#	echo "[DEBUG] patternCount'$patternCount'"
+	
+
+	if [[ "$respTimeOK" -eq 1 && "$patternCount" -ge "$expected" ]]
+	then
+		status='OK,  '
+	else
+		status='FAIL,'
+	fi
+	printf "$status %5sms, " "$respTimeStr"
+	echo "'$pattern' - $patternCount/$expected"
+
+done < $tmp
+
+rm $tmp
