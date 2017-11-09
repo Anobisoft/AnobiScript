@@ -74,6 +74,10 @@ filebirthdate ./D*
 ./Documents:2015-07-09
 ./Downloads:2015-07-09
 ```
+---
+
+cd webtest_example
+webtest_loop 60 webtest_get.config_example webtest_post.config_example color
 
 ---
 
