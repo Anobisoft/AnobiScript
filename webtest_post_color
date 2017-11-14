@@ -4,7 +4,6 @@
 boudary=$(uuidgen)
 tmp=$(mktemp)
 wd=${0%/*}
-tabs 4
 
 awk -F";" '{for (i = 1; i <= NF; i++) printf $i " "; print ""}' $1 > $tmp
 while read link datafile timeout timax testlimit pattern expected
@@ -13,7 +12,9 @@ do
 #	echo "[DEBUG] config: $link;$datafile;$timeout;$timax;$testlimit;$pattern;$expected"
 	data=$(cat $datafile)
 	echo "[<color=Cyan>DATA</color>]"
+tabs 4
 	echo "$data"
+tabs
 	
 	resp=$(curl -sw "$boudary%{time_total}" --connect-timeout $timeout -m $timax -d "$data" "$link")
 #	echo "[DEBUG] resp:\n$resp"
@@ -24,7 +25,7 @@ do
 	respTimeOK=$(echo $respTime"<($testlimit*1000)" | bc -l)
 #	echo "[DEBUG] respTimeOK'$respTimeOK'"
 
-	respTimeStr=$(sed 's/.0000//' <<< $respTime)
+	respTimeStr=$(sed 's/\.[0-9]\{0,7\}//' <<< $respTime)
 #	echo "[DEBUG] respTimeStr'$respTimeStr'"
 
 	patternCount=$(grep -oF "$pattern" <<< $resp | wc -l)

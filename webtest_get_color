@@ -21,7 +21,7 @@ do
 	respTimeOK=$(echo $respTime"<($testlimit*1000)" | bc -l)
 #	echo "[DEBUG] respTimeOK'$respTimeOK'"
 
-	respTimeStr=$(sed 's/.0000//' <<< $respTime)
+	respTimeStr=$(sed 's/\.[0-9]\{0,7\}//' <<< $respTime)
 #	echo "[DEBUG] respTimeStr'$respTimeStr'"
 
 	patternCount=$(grep -oF "$pattern" <<< $resp | wc -l)

@@ -15,13 +15,13 @@ do
 
 #	echo "[DEBUG] resp:\n$resp"
 
-	respTime=$(echo $resp | grep -o "$boudary.*" | sed "s/$boudary//; s/\,/\./; s/$/*1000.0/;" | bc -l)
+	respTime=$(echo $resp | grep -o "$boudary.*" | sed "s/$boudary/scale\=1\; /; s/\,/\./; s/$/*1000.0/;" | bc -l)
 #	echo "[DEBUG] respTime'$respTime'"
 
 	respTimeOK=$(echo $respTime"<($testlimit*1000)" | bc -l)
 #	echo "[DEBUG] respTimeOK'$respTimeOK'"
 
-	respTimeStr=$(sed 's/.0000//' <<< $respTime)
+	respTimeStr=$(sed 's/\.[0-9]\{0,7\}//' <<< $respTime)
 #	echo "[DEBUG] respTimeStr'$respTimeStr'"
 
 	patternCount=$(grep -oF "$pattern" <<< $resp | wc -l)

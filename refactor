@@ -11,14 +11,5 @@
 
 grep -lIRE "$1" | while read file
 do
-	tmp=$(mktemp)
-	awk '
-{
-	gsub("'"$1"'","'"$2"'",$0);
-	print $0;
-}
-' "$file" > $tmp
-
-mv $tmp "$file"
-	
+	sed -i$3 's/'"$1"'/'"$2"'/g' $file
 done
