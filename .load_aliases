@@ -3,6 +3,6 @@ alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias openws='find -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
 alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '*.mobileprovision' -delete'
+alias clearderiveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
 alias repod='pod update --no-repo-update'
 alias repodexample='pod update --no-repo-update --project-directory=Example'
-
