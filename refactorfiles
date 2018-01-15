@@ -7,5 +7,7 @@
 #
 
 [ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)"; exit 1; }
-
-find . -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "{}" "${x/'"$1"'/'"$2"'}"' \;
+# mv "$x" "${x%$1*}$2${x##*$1}"
+find . -type d -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "$x" "${x%'"$1"'*}'"$2$"'{x##*'"$1"'}"' \;
+find . -type f -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "$x" "${x%'"$1"'*}'"$2$"'{x##*'"$1"'}"' \;
+find . -type l -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "$x" "${x%'"$1"'*}'"$2$"'{x##*'"$1"'}"' \;
