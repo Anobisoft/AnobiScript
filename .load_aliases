@@ -6,4 +6,7 @@ alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ 
 alias clearderiveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
 alias repod='pod update --no-repo-update'
 alias repodexample='pod update --no-repo-update --project-directory=Example'
+alias podspecversion='grep ".version\s*=" *.podspec | grep -oP "\d+\.\d+\.\d+"'
+alias podpush='pod lib lint && git tag v$(podspecversion) && git push --tags && pod trunk push && pod repo update master'
+
 alias clearpodcache='rm -rf /Users/pletnev/Library/Caches/CocoaPods/Pods/External/'
