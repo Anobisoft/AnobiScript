@@ -68,6 +68,7 @@ filebirthdate ./D*
 ---
 
 # Aliases
+как подключать смотрите пример `.bash_profile`
 ### Xcode
 - openws - открывает все workspace файлы рекурсивно начиная с текущей директории
 - clearmobileprovision - вычищает все provision профайлы из xcode
@@ -88,7 +89,7 @@ alias clearpodcache='rm -rf /Users/pletnev/Library/Caches/CocoaPods/Pods/Externa
 некогда объяснять. смотри пример:
 ```
 cd webtest_example
-webtest_loop 300 feswebtest_getmethod.config feswebtest_postmethod.config color > webtest.log& tail -f webtest.log
+webtest_loop 300 webtest_get.config_example webtest_post.config_example color > webtest.log& tail -f webtest.log
 ```
 
 ---
