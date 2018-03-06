@@ -26,13 +26,13 @@ chsh -s /usr/local/bin/bash
 ```
 ---
 
-## 🆕 xcodeprojfix_deviceswitchbutton - исправляет баг отсутствия кнопок iPad/iPhone в секции Deployment Info везде где найдет
+## 🆕 xcodeprojfix_device_switch_button - исправляет баг отсутствия кнопок iPad/iPhone в секции Deployment Info везде где найдет
 Баг лечится удалением строчки `CreatedOnToolsVersion = X.X.X;`, с чем скрипт прекрасно справляется.
 Поиск начинается из директории указанной в параметре, или из текущей, если ничего не указанно.
 
 ---
 
-## iconsetwith1024 - создает минимально необходимый набор иконок AppIcon.appiconset в папке с картинкой из параметра
+## iconsetwith1024ios - создает минимально необходимый набор иконок AppIcon.appiconset в папке с картинкой из параметра
 **Важно!** требует наличия папки `iconsetwith1024json` с уже настроенным `Contents.json`
 
 ```
@@ -47,23 +47,13 @@ Icon-167x167.png  Icon-40x40.png    Icon-80x80.png
 
 ---
 
-## colorize - скрипт для окраски текста
+## colorize - скрипт для окраски текста при выводе в терминале
 Заменяет текст после тэга вида `<color=Red>` на текст соответствующего цвета.<br />
 Автоматически сбрасывает цвет _в конце строки_, либо вручную тэгом `</color>` в любом месте текста.<br />
 Использовать так:<br />
 `echo 'OMG! <color=Green>Green text. </color>Normal text. <color=Blue>Blue text. <color=Red>Red text' | colorize`<br />
 Или так:<br />
 `colorize 'OMG! <color=Green>Green text. </color>Normal text. <color=Blue>Blue text. <color=Red>Red text'`<br />
-
----
-
-## cleanup_provision_profiles - вычищает все provision профайлы из xcode
-Просто запускаем и радуемся.
-
----
-
-## killxcode - когда ничего не помогает
-прибивает :hammer: жестко (-9) все процессы xcode
 
 ---
 
@@ -74,10 +64,32 @@ filebirthdate ./D*
 ./Documents:2015-07-09
 ./Downloads:2015-07-09
 ```
+
 ---
 
+# Aliases
+### Xcode
+- openws - открывает все workspace файлы рекурсивно начиная с текущей директории
+- clearmobileprovision - вычищает все provision профайлы из xcode
+- clearderiveddata - не менее полезный алиас для вычищения DerivedData (все время забываю где именно эта папка)
+- killxcode - когда ничего не помогает (прибивает :hammer: жестко (-9) все процессы xcode)
+
+### Pods
+alias repod='pod update --no-repo-update'
+alias repodexample='pod update --no-repo-update --project-directory=Example'
+alias podspecversion='grep ".version\s*=" *.podspec | grep -oP "\d+\.\d+\.\d+"'
+alias podpush='pod lib lint && git tag v$(podspecversion) && git push --tags && pod trunk push && pod repo update master'
+alias clearpodcache='rm -rf /Users/pletnev/Library/Caches/CocoaPods/Pods/External/'
+
+---
+
+# Webtest
+### Набор скриптов для мониторинга в терминале состояния веб интефейсов
+некогда объяснять. смотри пример:
+```
 cd webtest_example
-webtest_loop 60 webtest_get.config_example webtest_post.config_example color
+webtest_loop 300 feswebtest_getmethod.config feswebtest_postmethod.config color > webtest.log& tail -f webtest.log
+```
 
 ---
 
