@@ -76,11 +76,11 @@ filebirthdate ./D*
 - killxcode - когда ничего не помогает (прибивает :hammer: жестко (-9) все процессы xcode)
 
 ### Pods
-alias repod='pod update --no-repo-update'
-alias repodexample='pod update --no-repo-update --project-directory=Example'
-alias podspecversion='grep ".version\s*=" *.podspec | grep -oP "\d+\.\d+\.\d+"'
-alias podpush='pod lib lint && git tag v$(podspecversion) && git push --tags && pod trunk push && pod repo update master'
-alias clearpodcache='rm -rf /Users/pletnev/Library/Caches/CocoaPods/Pods/External/'
+- repod - короткий алиас для обновления подов в проекте без обновления репозиториев спецификаций 
+- repodexample - то же, но для папки Example (полезно для проектов библиотек поддерживающих управление зависимостями средствами Cocoapods)
+- podspecversion - показывает версию из спецификации podspec
+- podpush - валидирует, ставит тег на HEAD, пушит библиотеку, обновляет репозиторий спецификаций
+- clearpodcache - чистит кэш библиотек, полезно если на этапе публикации произошла ошибка и релиз нужно перенести
 
 ---
 
