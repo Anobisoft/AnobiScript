@@ -9,7 +9,7 @@
 [ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)"; exit 1; }
 [ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed'; exit 9; }
 
-grep -lr "$1" | while read file
+grep -lr "$1" | grep -v '.git' | while read file
 do
 	sed -i$3 's/'"$1"'/'"$2"'/g' "$file"
 done
