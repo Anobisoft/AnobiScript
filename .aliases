@@ -4,8 +4,9 @@ alias ls='ls --color=auto'
 
 # Xcode
 alias openws='find -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
-alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '*.mobileprovision' -delete'
+alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '"'"'*.mobileprovision'"'"' -delete'
 alias clearderiveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
+alias killxcode='ps ax | grep -i xcode | grep -v grep | awk '"'"'{ print $1; }'"'"' | sed '"'"':a;N;$!ba;s/\n/ /g'"'"' | xargs kill -9'
 
 # Pods
 alias repod='pod update --no-repo-update'
