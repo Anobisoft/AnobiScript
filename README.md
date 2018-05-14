@@ -8,18 +8,10 @@ iOS Developer Helpers
 rvm install ruby-2.5.1
 rvm use ruby-2.5.1 --default
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-brew install coreutils
-brew install binutils
 brew install bash
-brew install grep --with-default-names
-brew install gawk
-brew install gnu-sed --with-default-names
-brew install findutils --with-default-names
-brew install gnu-tar --with-default-names
-brew install gzip
-brew install diffutils
-brew install wget
+
+brew install coreutils findutils grep gawk gnu-sed gnu-tar gzip diffutils binutils wget --with-default-names
+echo 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"' >> ~/.bash_profile &&
 
 sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
 chsh -s /usr/local/bin/bash
