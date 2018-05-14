@@ -1,5 +1,5 @@
-[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [config]"; exit 1; }
-[ -e $fpath ] || { echo "ERROR(2) config file not found ($1)"; exit 2; }
+[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [config]" 1>&2; exit 1; }
+[ -e $fpath ] || { echo "ERROR(2) config file not found ($1)" 1>&2; exit 2; }
 
 boudary=$(uuidgen)
 tmp=$(mktemp)

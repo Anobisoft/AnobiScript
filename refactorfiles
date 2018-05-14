@@ -6,7 +6,8 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)"; exit 1; }
+[ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)" 1>&2; exit 1; }
+
 # mv "$x" "${x%$1*}$2${x##*$1}"
 find . -type d -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "$x" "${x%'"$1"'*}'"$2$"'{x##*'"$1"'}"' \;
 find . -type f -name '*'"$1"'*' -exec bash -c 'x="{}"; mv "$x" "${x%'"$1"'*}'"$2$"'{x##*'"$1"'}"' \;

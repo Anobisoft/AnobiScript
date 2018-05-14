@@ -6,8 +6,8 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ ${BASH_VERSINFO[0]} -ge "4" ] || { echo 'ERROR(8) bash 4 needed'; exit 8; }
-#[ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed'; exit 9; }
+[ ${BASH_VERSINFO[0]} -ge "4" ] || { echo 'ERROR(8) bash 4 needed' 1>&2; exit 4; }
+#[ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed' 1>&2; exit 6; }
 
 [ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [1024x1024 PNG FILE]"; exit 1; }
 [ -e $fpath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 

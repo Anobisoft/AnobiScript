@@ -6,8 +6,8 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ $(stat --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU coreutil needed'; exit 9; }
-[ $(sed --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU sed needed'; exit 9; }
+[ $(stat --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU coreutil needed' 1>&2; exit 5; }
+[ $(sed --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU sed needed' 1>&2; exit 7; }
 
 [ -n "$1" ] && symbol=$1 || symbol='//'
 

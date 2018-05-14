@@ -6,7 +6,7 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ "$#" -gt 0 ] || { echo "${0##*/}: missing file operand"; exit 1; }
+[ "$#" -gt 0 ] || { echo "${0##*/}: missing file operand" 1>&2; exit 1; }
 
 for fn in $@
 do

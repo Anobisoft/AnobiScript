@@ -6,8 +6,8 @@
 #  Copyright © 2017 Anobisoft. All rights reserved.
 #
 
-[ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)"; exit 1; }
-[ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed'; exit 9; }
+[ "$#" -ne 2 ] && { echo "ERROR(1) Illegal number of parameters($#)" 1>&2; exit 1; }
+[ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed' 1>&2; exit 6; }
 
 grep -lr "$1" | grep -v '.git' | while read file
 do
