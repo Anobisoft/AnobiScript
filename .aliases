@@ -4,8 +4,10 @@ alias ls='ls --color=auto'
 
 # Xcode
 alias openws='find -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
-alias clearmobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '"'"'*.mobileprovision'"'"' -delete'
-alias clearderiveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
+alias xclear_mobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '"'"'*.mobileprovision'"'"' -delete'
+alias xclear_deriveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
+alias xclear_cache='rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang/ModuleCache"'
+alias xclear='xclear_mobileprovision && xclear_deriveddata && xclear_cache'
 alias killxcode='ps ax | grep -i xcode | grep -v grep | awk '"'"'{ print $1; }'"'"' | sed '"'"':a;N;$!ba;s/\n/ /g'"'"' | xargs kill -9'
 
 # Pods
