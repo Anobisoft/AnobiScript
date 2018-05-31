@@ -3,7 +3,7 @@ alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
 # Xcode
-alias openws='find -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
+alias openws='find . -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
 alias xclear_mobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '"'"'*.mobileprovision'"'"' -delete'
 alias xclear_deriveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
 alias xclear_cache='rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang/ModuleCache"'
