@@ -1,6 +1,7 @@
 # Colorize
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
+alias diff='diff --color=auto'
 
 # Xcode
 alias openws='find . -name *.xcworkspace -and ! -name project.xcworkspace -exec open {} \;'
@@ -13,6 +14,6 @@ alias killxcode='ps ax | grep -i xcode | grep -v grep | awk '"'"'{ print $1; }'"
 # Pods
 alias repod='pod update --no-repo-update'
 alias repodexample='pod update --no-repo-update --project-directory=Example'
-alias podspecversion='grep ".version\s*=" *.podspec | grep -oP "\d+\.\d+\.\d+"'
+alias podspecversion='grep ".version\s*=" *.podspec | grep -oE '([0-9]+\.){2}[0-9]+'
 alias podpush='pod lib lint && git tag v$(podspecversion) && git push --tags && pod trunk push && pod repo update master'
 alias clearpodcache='rm -rf /Users/pletnev/Library/Caches/CocoaPods/Pods/External/'
