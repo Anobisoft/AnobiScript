@@ -85,6 +85,14 @@ cd webtest_example
 webtest_loop 300 webtest_get.config_example webtest_post.config_example color > webtest.log& tail -f webtest.log
 ```
 
+# Refactoring
+### prefix example
+```
+refactor '\([^A-Za-z]\)IndividualAccountType' '\1AFAIndividualAccountType' -e
+refactorfiles IndividualAccountType AFAIndividualAccountType
+git status
+git diff
+```
 ---
 
 *Это свободное программное обеспечение. Вы можете изменять и распространять его.<br />
