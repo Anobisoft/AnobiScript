@@ -1,0 +1,54 @@
+#
+#  pod_trunk_delete_all_force  
+#  AnobiScript
+#
+#  Created by Stanislav Pletnev on 2018-11-27
+#  Copyright © 2018 Anobisoft. All rights reserved.
+#
+
+export anobi_version_regexp='([0-9]+\.){2}[0-9]+'
+
+function warning() {
+  echo -e '\e[1;33mWARNING: \e[0;33m'$@'\e[0m'   
+}
+
+function error() {
+  echo -e '\e[1;30m[1]: \e[0;30m'$@'\e[0m'
+}
+
+function positive() {
+  echo -e '\e[1;32m\e[0;32m'$@'\e[0m'
+}
+
+function pod_trunk_delete_all_force() {
+
+  echo Searching versions of $1...
+  versions_string=$(pod search $1 --simple | grep 'Versions')
+  if [ -z "${versions_string}" ]
+  then 
+    warning "$1 not found"
+    return 1
+  fi
+
+  master_versions_string=$(echo $versions_string | grep -oE "(${anobi_version_regexp}, )*${anobi_version_regexp} \[master repo\]")
+  master_versions=$(echo $master_versions_string | grep -oE $anobi_version_regexp)
+  positive "Versions: $master_versions_string"
+  echo "$master_versions" | while read version
+  do
+    echo "force >>> pod trunk delete $1 $version --silent"
+    echo 'y' | pod trunk delete $1 $version --silent
+  done
+
+}
+
+[ "$#" -gt 0 ] && {
+  for podname in $*
+  do
+    pod_trunk_delete_all_force $podname
+  done
+  exit 0
+} || while IFS= read -r podname
+do
+    pod_trunk_delete_all_force $podname
+done
+
