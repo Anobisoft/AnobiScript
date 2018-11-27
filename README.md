@@ -32,6 +32,7 @@ iOS Developer Helpers
 *Используйте с большой осторожностью! Всегда проверяйте изменения!*
 ### prefix example
 ```
+cd $MyProjectPath
 refactor '\([^A-Za-z]\)IndividualAccountType' '\1AFAIndividualAccountType' -e
 refactorfiles IndividualAccountType AFAIndividualAccountType
 git status
