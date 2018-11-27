@@ -66,6 +66,7 @@ filebirthdate ./D*
 - __xclear_mobileprovision__ - вычищает все provision профайлы из xcode.
 - __xclear_deriveddata__ - не менее полезный алиас для вычищения DerivedData (все время забываю где именно эта папка).
 - __xclear_cache__ - чистит кэш.
+- __xclear__ - выполняет последовательно `xclear_mobileprovision && xclear_deriveddata && xclear_cache`.
 - __killxcode__ - когда ничего не помогает (прибивает :hammer: жестко (-9) все процессы xcode).
 
 ### Pods
