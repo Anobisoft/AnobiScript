@@ -4,6 +4,7 @@ iOS Developer Helpers
 ---
 
 # Aliases
+все алиасы в файле `.aliases`
 как подключать смотрите пример `.bash_profile`
 ### Xcode
 - __openws__ - открывает все workspace файлы рекурсивно начиная с текущей директории.
@@ -13,7 +14,7 @@ iOS Developer Helpers
 - __xclear__ - выполняет последовательно `xclear_mobileprovision && xclear_deriveddata && xclear_cache`.
 - __killxcode__ - когда ничего не помогает (прибивает :hammer: жестко (-9) все процессы xcode).
 
-### Pods
+### CocoaPods
 - __repod__ - короткий алиас для обновления подов в проекте без обновления репозиториев спецификаций 
 - __repodexample__ - то же, но для папки Example (полезно для проектов библиотек поддерживающих управление зависимостями средствами Cocoapods)
 - __podspecversion__ - показывает версию из спецификации podspec
@@ -25,6 +26,12 @@ iOS Developer Helpers
 ## xcodeprojfix_device_switch_button - исправляет баг отсутствия кнопок iPad/iPhone в секции Deployment Info везде где найдет
 Баг лечится удалением строчки `CreatedOnToolsVersion = X.X.X;`, с чем скрипт прекрасно справляется.
 Поиск начинается из директории указанной в параметре, или из текущей, если ничего не указанно.
+
+---
+
+## pod_trunk_delete_all_force - сносит все версии опубликованных в репозиторий спецификаций CocoaPods (master)
+[The CocoaPods Master Repo](https://github.com/CocoaPods/Specs.git)
+После выполнения, к примеру, `pod_trunk_delete_all_force IDTableModuleCore`, мы наблюдаем 404 на странице 
 
 ---
 
