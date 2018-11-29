@@ -1,0 +1,17 @@
+
+export HEADER_CONTENT_JSON='Content-type: application/json; charset=utf-8'
+export HEADER_ACCEPT_JSON='Accept: application/json; charset=utf-8'
+
+export CURL_WOUT_FORMAT_TIMINGS='\n
+    time_namelookup:  %{time_namelookup}\n
+       time_connect:  %{time_connect}\n
+    time_appconnect:  %{time_appconnect}\n
+   time_pretransfer:  %{time_pretransfer}\n
+      time_redirect:  %{time_redirect}\n
+ time_starttransfer:  %{time_starttransfer}\n
+                    ----------\n
+         time_total:  %{time_total}\n'
+
+alias curlog='curl -vskL -w"$CURL_WOUT_FORMAT_TIMINGS" -H "$HEADER_CONTENT_JSON" -H "$HEADER_ACCEPT_JSON"'
+alias curlapi='curlog -H "token: $HEADER_TOKEN"'
+
