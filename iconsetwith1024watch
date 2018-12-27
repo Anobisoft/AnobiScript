@@ -2,8 +2,8 @@
 #  iconsetwith1024ios
 #  AnobiScript
 #
-#  Created by Stanislav Pletnev on 2017-05-16
-#  Copyright © 2017 Anobisoft. All rights reserved.
+#  Created by Stanislav Pletnev on 2018-12-27
+#  Copyright © 2018 Anobisoft. All rights reserved.
 #
 
 [ ${BASH_VERSINFO[0]} -ge "4" ] || { echo 'ERROR(8) bash 4 needed' 1>&2; exit 4; }
@@ -26,17 +26,17 @@ fnx=${fpath##*/}
 fname=${fnx%.*}
 fext=${fnx#*.}
 
-#echo "DEBUG $root // $fname // $fext"
+echo "DEBUG $root // $fname // $fext"
 
 dir=$root/AppIcon.appiconset
 mkdir -p $dir
 
-cnt=${0%/*}/iconset_json_iOS/Contents.json
+cnt=${0%/*}/iconset_json_watch/Contents.json
 cp $cnt $dir
 
-icn1x=( 20 29 40 76 )
-icn2x=( 20 29 40 76 83.5 )
-icn3x=( 20 29 40 60 )
+icn1x=( )
+icn2x=( 24 27.5 29 40 44 50 86 98 108 )
+icn3x=( 29 )
 
 declare -A sizes
 sizes[1]=${icn1x[@]}
@@ -55,7 +55,7 @@ do
 	sips -z $sz $sz $fpath --out $dir/Icon-${sz}x${sz}.$fext
 done
 
-cp $fpath $dir/ios-marketing1024.png
+cp $fpath $dir/Icon-1024x1024.png
 
 echo
 echo "$dir"
