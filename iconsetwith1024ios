@@ -9,30 +9,30 @@
 [ ${BASH_VERSINFO[0]} -ge "4" ] || { echo 'ERROR(8) bash 4 needed' 1>&2; exit 4; }
 #[ $(grep --version | grep -c GNU) -gt 0 ] || { echo 'ERROR(9) GNU grep needed' 1>&2; exit 6; }
 
-[ "$1" ] && fpath=$1 || { echo "Usage: ${0##*/} [1024x1024 PNG FILE]"; exit 1; }
-[ -e $fpath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 
-pixelHeight=$(sips -g pixelHeight $fpath | tail -1 | grep -c "[^0-9]1024$")
-pixelWidth=$(sips -g pixelWidth $fpath | tail -1 | grep -c "[^0-9]1024$")
+scriptname=${0##*/}
+
+[ "$1" ] && sourcepath=$1 || { echo "Usage: ${scriptname} [1024x1024 PNG FILE]"; exit 1; }
+[ -e $sourcepath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 
+pixelHeight=$(sips -g pixelHeight $sourcepath | tail -1 | grep -c "[^0-9]1024$")
+pixelWidth=$(sips -g pixelWidth $sourcepath | tail -1 | grep -c "[^0-9]1024$")
 [ "$((${pixelHeight}+${pixelWidth}))" -eq 2 ] || { echo "ERROR(3) Image size must be 1024x1024"; exit 3; }
 
 
-logfile=${0##*/}.log
+logfile=${scriptname}.log
 
 {
 echo $0 $@
 
-root=${fpath%/*}
-fnx=${fpath##*/}
-fname=${fnx%.*}
+sourcedir=${sourcepath%/*}
+[ "$sourcepath" = "$sourcedir" ] && sourcedir=.
+filename=${sourcepath##*/}
+fname=${filename%.*}
 fext=${fnx#*.}
 
-#echo "DEBUG $root // $fname // $fext"
+targetdir=$sourcedir/iOSappiconset/AppIcon.appiconset
+mkdir -p $targetdir
 
-dir=$root/AppIcon.appiconset
-mkdir -p $dir
-
-cnt=${0%/*}/iconset_json_iOS/Contents.json
-cp $cnt $dir
+cp ${0%/*}/iconset_json_iOS/Contents.json $targetdir
 
 icn1x=( 20 29 40 76 )
 icn2x=( 20 29 40 76 83.5 )
@@ -45,21 +45,21 @@ sizes[3]=${icn3x[@]}
 
 for i in "${!sizes[@]}"
 do
-	isz=${sizes[$i]}
-	for sz in ${isz[@]}
-	do
-		echo "$sz * $i" | bc | sed 's/\.0$//'
-	done
+    isz=${sizes[$i]}
+    for sz in ${isz[@]}
+    do
+        echo "$sz * $i" | bc | sed 's/\.0$//'
+    done
 done | sort -u | while read sz
 do
-	sips -z $sz $sz $fpath --out $dir/Icon-${sz}x${sz}.$fext
+    sips -z $sz $sz --matchTo '/System/Library/ColorSync/Profiles/sRGB Profile.icc' $sourcepath --out $targetdir/AppIcon-${sz}x${sz}.$fext
 done
 
-cp $fpath $dir/ios-marketing1024.png
+cp $sourcepath $targetdir/ios-marketing1024.png
 
 echo
-echo "$dir"
-ls -lh $dir
+echo "$targetdir"
+ls -lh $targetdir
 
 } &> $logfile
 
