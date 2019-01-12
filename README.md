@@ -68,13 +68,13 @@ filebirthdate ./D*
 
 ---
 
-## iconsetwith1024ios - создает минимально необходимый набор иконок AppIcon.appiconset в папке с картинкой из параметра
-**Важно!** требует наличия папки `iconsetwith1024json` с уже настроенным `Contents.json`
+## iconsetwith1024ios(watch) - создает минимально необходимый набор иконок AppIcon.appiconset в папке с картинкой из параметра
+**Важно!** требует наличия папки `iconset_json_iOS`(watch) с уже настроенным `Contents.json`
 
 ```
-21:38:14 pletnev@WS0256 ~ # iconsetwith1024 ~/Documents/Resources/MyProject/icon-iOS_1024-itunes.png 
-OK 3911 iconsetwith1024.log
-21:39:12 pletnev@WS0256 ~ # ls ~/Documents/Resources/MyProject/AppIcon.appiconset/
+21:38:14 anobisoft@WS0256 ~ # iconsetwith1024ios ~/Documents/Resources/MyProject/icon-iOS_1024-itunes.png 
+OK 3911 iconsetwith1024ios.log
+21:39:12 anobisoft@WS0256 ~ # ls ~/Documents/Resources/MyProject/iOSappiconset/AppIcon.appiconset/
 Contents.json     Icon-180x180.png  Icon-58x58.png  Icon-87x87.png
 Icon-120x120.png  Icon-20x20.png    Icon-60x60.png
 Icon-152x152.png  Icon-29x29.png    Icon-76x76.png

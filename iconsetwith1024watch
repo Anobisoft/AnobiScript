@@ -27,7 +27,7 @@ sourcedir=${sourcepath%/*}
 [ "$sourcepath" = "$sourcedir" ] && sourcedir=.
 filename=${sourcepath##*/}
 fname=${filename%.*}
-fext=${fnx#*.}
+fext=${filename#*.}
 
 targetdir=$sourcedir/watchOSappiconset/AppIcon.appiconset
 mkdir -p $targetdir
