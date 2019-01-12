@@ -97,8 +97,8 @@ webtest_loop 300 webtest_get.config_example webtest_post.config_example color > 
 
 ```
 \curl -sSL https://get.rvm.io | bash -s stable
-rvm install ruby-2.5.1
-rvm use ruby-2.5.1 --default
+rvm install ruby-2.5.3
+rvm use ruby-2.5.3 --default
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install bash
