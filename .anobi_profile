@@ -1,0 +1,6 @@
+source .prompt
+source .brewprefix
+source .functions
+source .aliases
+source .curl_templates
+

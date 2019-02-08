@@ -100,15 +100,17 @@ webtest_loop 300 webtest_get.config_example webtest_post.config_example color > 
 rvm install ruby-2.5.3
 rvm use ruby-2.5.3 --default
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
 brew install bash
 sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
 chsh -s /usr/local/bin/bash
-
-brew install coreutils findutils grep gawk gnu-sed gnu-tar gzip diffutils binutils wget
-echo >> ~/.bash_profile
-echo 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"' >> ~/.bash_profile
-echo 'export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"' >> ~/.bash_profile
+brew install gawk diffutils wget
+brew install coreutils findutils grep gnu-sed binutils
+git clone git@github.com:Anobisoft/AnobiScript.git .scripts
+echo -e '
+export PATH="$PATH:$HOME/.scripts
+source .anobi_profile
+' >> ~/.bash_profile
+exit
 
 ```
 
