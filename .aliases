@@ -8,12 +8,13 @@ alias openws='find . -name *.xcworkspace -and ! -name project.xcworkspace -exec 
 alias xclear_mobileprovision='find ~/Library/MobileDevice/Provisioning\ Profiles/ -name '"'"'*.mobileprovision'"'"' -delete'
 alias xclear_deriveddata='rm -rf ~/Library/Developer/Xcode/DerivedData/'
 alias xclear_cache='rm -rf "$(getconf DARWIN_USER_CACHE_DIR)/org.llvm.clang/ModuleCache"'
-alias xclear='xclear_mobileprovision && xclear_deriveddata && xclear_cache'
+alias xclear='xclear_deriveddata && xclear_cache'
 alias killxcode='ps ax | grep -i xcode | grep -v grep | awk '"'"'{ print $1; }'"'"' | sed '"'"':a;N;$!ba;s/\n/ /g'"'"' | xargs kill -9'
 
 # Pods
 alias repod='pod update --no-repo-update'
 alias repodexample='pod update --no-repo-update --project-directory=Example'
+alias podexample='pod install --project-directory=Example'
 alias podspecversion='grep ".version\s*=" *.podspec | grep -oE "([0-9]+\.){2}[0-9]+"'
 alias podpush='pod lib lint && git tag $(podspecversion) && git push --tags && pod trunk push && pod repo update master'
 alias clearpodcache='rm -rf /Users/pletnev/Library/Caches/CocoaPods/Pods/External/'
