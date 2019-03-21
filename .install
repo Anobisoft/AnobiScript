@@ -1,0 +1,32 @@
+
+function installCommandLineTools() {
+  os_ver=$(sw_vers -productVersion | awk -F. '{print $1 "." $2}')
+  tmp_in_progress=/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  touch ${tmp_in_progress}
+  product=$(softwareupdate --list | awk "/\* Command Line.*${os_ver}/ { sub(/^   \* /, \"\"); print }")
+  softwareupdate --verbose --install "${product}" || {
+    echo 'CommandLineTools installation failed.' >&2
+    rm ${tmp_in_progress}
+    exit 1
+  }
+  rm ${tmp_in_progress}
+}
+
+gcc --help > /dev/null || installCommandLineTools || exit $?
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" && \
+brew install bash gawk diffutils wget coreutils findutils grep gnu-sed binutils
+
+curl -sSL https://get.rvm.io | bash -s stable
+rvm install --quiet-curl ruby-2.5.3
+bash --login
+rvm use ruby-2.5.3 --default
+
+[ "$1" ] && script_path="$1" || script_path='$HOME/.scripts'
+sudo bash -c '[ "$(grep -c '^/usr/local/bin/bash$' /etc/shells)" -eq 0 ] && echo /usr/local/bin/bash >> /etc/shells && chsh -s /usr/local/bin/bash'
+
+eval git clone git@github.com:Anobisoft/AnobiScript.git "$script_path" && \
+[ "$(grep -c 'source .anobi_profile' ~/.bash_profile)" -eq 0 ] && echo -e '
+export PATH="$PATH:'"$script_path"'"
+source .anobi_profile
+' >> ~/.bash_profile

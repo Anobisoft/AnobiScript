@@ -3,6 +3,11 @@ iOS Developer Helpers
 
 ---
 
+# Installation
+```
+\curl -sSL https://raw.githubusercontent.com/Anobisoft/AnobiScript/master/.install | bash -s '$HOME/.scripts' && exit 0
+```
+
 # Aliases
 все алиасы в файле `.aliases`
 как подключать смотрите пример `.bash_profile`
@@ -92,27 +97,5 @@ webtest_loop 300 webtest_get.config_example webtest_post.config_example color > 
 ```
 
 ---
-
-**ВНИМАНИЕ!** Скрипты написаны под GNU bash, версия 4.4.5(1)-release и не редко могут использовать GNU версии утилит. Настоятельно рекомендую использовать только самое лучшее!
-
-```
-\curl -sSL https://get.rvm.io | bash -s stable
-rvm install ruby-2.5.3
-rvm use ruby-2.5.3 --default
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew install bash
-sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
-chsh -s /usr/local/bin/bash
-brew install gawk diffutils wget
-brew install coreutils findutils grep gnu-sed binutils
-git clone git@github.com:Anobisoft/AnobiScript.git .scripts
-echo -e '
-export PATH="$PATH:$HOME/.scripts
-source .anobi_profile
-' >> ~/.bash_profile
-exit
-
-```
-
 *Это свободное программное обеспечение. Вы можете изменять и распространять его.<br />
 НИКАКАЯ ГАРАНТИЯ не предоставляется в пределах, допускаемых законом.*

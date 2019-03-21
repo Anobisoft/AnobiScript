@@ -3,7 +3,7 @@ while read prefix
 do
   export PATH="$prefix/libexec/gnubin:$PATH"
   export MANPATH="$prefix/libexec/gnuman:$MANPATH"
-done <<< $(brew --prefix coreutils findutils grep gnu-sed binutils)
+done <<< "$(brew --prefix coreutils findutils grep gnu-sed binutils)"
 
 << Caveats
 
