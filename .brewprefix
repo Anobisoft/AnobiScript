@@ -1,13 +1,15 @@
 
+echo 
+echo '# brewprefix'
 while read prefix
 do
-  export PATH="$prefix/libexec/gnubin:$PATH"
-  export MANPATH="$prefix/libexec/gnuman:$MANPATH"
+  echo 'export PATH="'"$prefix"'/libexec/gnubin:$PATH"'
+  echo 'export MANPATH="'"$prefix"'/libexec/gnuman:$MANPATH"'
 done <<< "$(brew --prefix coreutils findutils grep gnu-sed)"
 
 while read prefix
 do
-  export PATH="$prefix/bin:$PATH"
+  echo 'export PATH="'"$prefix"'/bin:$PATH"'
 done <<< "$(brew --prefix binutils curl)"
 
 

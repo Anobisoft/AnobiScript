@@ -3,11 +3,11 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 brew install bash gawk diffutils wget coreutils findutils grep gnu-sed binutils curl
 
 curl -sSL https://get.rvm.io | bash -s stable
-source ~/.rvm/scripts/rvm
+source $HOME/.rvm/scripts/rvm
 rvm install --quiet-curl ruby-2.5.3 && rvm use ruby-2.5.3 --default
 gem install cocoapods
 
-[ "$1" ] && script_path="$1" || script_path='$HOME/.scripts'
+script_path=${1:-\$HOME/.scripts}
 sudo bash -c '[ "$(grep -c '^/usr/local/bin/bash$' /etc/shells)" -eq 0 ] && echo /usr/local/bin/bash >> /etc/shells'
 chsh -s /usr/local/bin/bash
 
@@ -15,4 +15,6 @@ eval git clone git@github.com:Anobisoft/AnobiScript.git "$script_path" && \
 [ "$(grep -c 'source .anobi_profile' ~/.bash_profile)" -eq 0 ] && echo -e '
 export PATH="$PATH:'"$script_path"'"
 source .anobi_profile
-' >> ~/.bash_profile
+' >> $HOME/.bash_profile
+
+eval $script_path/.brewprefix >> $HOME/.bash_profile
