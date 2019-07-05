@@ -1,0 +1,19 @@
+SYMBOL=####
+
+for i in {0..15}; do
+    echo -en "\e[38;5;$(($i))m$SYMBOL "
+done
+echo
+echo
+for i in {0..5}; do
+  for j in {0..35}; do
+    echo -en "\e[38;5;$((16+$i*36+j))m$SYMBOL "
+  done
+  echo
+done
+echo
+for i in {0..23}; do
+    echo -en "\e[38;5;$((232+$i))m$SYMBOL "
+done
+
+echo -e "\e[m"

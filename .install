@@ -18,3 +18,4 @@ source .anobi_profile
 ' >> $HOME/.bash_profile
 
 eval $script_path/.brewprefix >> $HOME/.bash_profile
+ln -f $script_path/.alacritty.yml $HOME/.config/alacritty/alacritty.yml
