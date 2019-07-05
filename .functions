@@ -20,20 +20,12 @@ function hex2rgb {
 	done
 }
 
-declare -xA ANSI_COLOR_MAP=( \
-[Black]='0;30' [Grey]='1;30' [Gray]='1;30' \
-[Red]='0;31' [LRed]='1;31' \
-[Green]='0;32' [LGreen]='1;32' \
-[Orange]='0;33' [Brown]='0;33' [Yellow]='1;33' \
-[Blue]='0;34' [LBlue]='1;34' \
-[Purple]='0;35' [LPurple]='1;35' \
-[Cyan]='0;36' [LCyan]='1;36' \
-[LGrey]='0;37' [LGray]='0;37' [White]='1;37' [Clear]='0')
+# TODO: https://graf1x.com/list-of-colors-with-color-names/
+declare -xa ANSI_COLOR256MAP=( [Black]=0 )
 
-function colorize() {
+function ansi256color() {
     key=${1:-Clear}
-    color=${ANSI_COLOR_MAP[$key]}
-    echo -e "\e[${color}m"
+    color=${ANSI_COLOR256MAP[$key]}
+    echo -e "\e[38;5;${color}m"
 }
-
 
