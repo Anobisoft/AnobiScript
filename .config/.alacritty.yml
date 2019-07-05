@@ -271,7 +271,7 @@ colors:
 # Specifying a `duration` of `0` will disable the visual bell.
 visual_bell:
   animation: EaseOutExpo
-  duration: 50
+  duration: 20
   color: '0x7a7a7a'
 
 # Background opacity
