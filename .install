@@ -26,4 +26,4 @@ source .anobi_profile
 
 eval $ANOBISCRIPT/.brewprefix >> $HOME/.bash_profile
 
-ln -f $ANOBISCRIPT/.config/.alacritty.yml $HOME/.config/alacritty/alacritty.yml
+ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml
