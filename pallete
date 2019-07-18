@@ -1,23 +1,33 @@
-SYMBOL=${1:-####}
 
 for i in {0..15}; do
-    echo -en "\e[$(($i/8));$((30+$i%8))m$SYMBOL "
-done; echo -e "\e[m"
+    code="$(($i/8));$((30+$i%8))"
+    symbol=$(printf '%*s' 5 $code)
+    echo -en "\e[${code}m$symbol"
+done
 echo
 
+echo -en "\e[m"
 for i in {0..15}; do
-    echo -en "\e[38;5;$(($i))m$SYMBOL "
-done; echo -e "\e[m"
+    code=$i
+    symbol=$(printf '%*s' 5 $i)
+    echo -en "\e[38;5;$(($i))m$symbol"
+done
+echo
 echo
 
 for i in {0..5}; do
     for j in {0..35}; do
-        echo -en "\e[38;5;$((16+$i*36+j))m$SYMBOL "
+        code=$((16+$i*36+j))
+	symbol=$(printf '%*s' 5 $code)
+        echo -en "\e[38;5;${code}m$symbol"
     done
-    echo -e "\e[m"
+    echo
 done
 echo 
 
 for i in {0..23}; do
-    echo -en "\e[38;5;$((232+$i))m$SYMBOL "
-done; echo -e "\e[m"
+    code=$((232+$i))
+    symbol=$(printf '%*s' 5 $code)
+    echo -en "\e[38;5;${code}m$symbol"
+done
+echo -e "\e[m"

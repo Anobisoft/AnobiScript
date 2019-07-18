@@ -3,11 +3,11 @@ SCRIPT_DIR=$(dirname $SCRIPT_PATH)
 SCRIPT_NAME=${SCRIPT_PATH##*/}
 
 pushd $SCRIPT_DIR > /dev/null
-VERSION=$(git describe --abbrev=0 --tags)
+VERSION=$(git describe --abbrev=0 --tags 2> /dev/null)
 VERSION=${VERSION:-0.1.0}
 popd > /dev/null
 
-WORKSPACE_URL=git@git.sbis.ru:mobileworkspace
+WORKSPACE_URL=${WORKSPACE_URL:-'git@git.sbis.ru:mobileworkspace'}
 
 declare -A ANSI_COLOR_MAP=( \
 [Black]='30' [Grey]='1;30' [Gray]='1;30' \
