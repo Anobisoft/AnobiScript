@@ -1,0 +1,160 @@
+# self environment
+SCRIPT_DIR=$(dirname $0)
+SCRIPT_NAME=${0##*/}
+RC_FILE_NAME=".${SCRIPT_NAME}rc"
+
+# get version from git or hardcode
+pushd $SCRIPT_DIR > /dev/null
+VERSION=$(git describe --abbrev=0 --tags 2> /dev/null)
+VERSION=${VERSION:-1.1.0}
+popd > /dev/null
+
+# usage
+function usage() {
+    echo "$SCRIPT_NAME [options] command < modules.list
+
+options:
+-h, --help                 show brief help
+-b, --branch=BRANCH        specify a branch (default: development)
+-r, --remote=REMOTE        specify a remote URL with Podfile
+-f, --filter=FILTER        specify filter pattern
+-v, --version              show version
+
+"
+}
+
+
+# options selector
+while [[ $# -gt 0 ]]
+do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+
+    -b)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_BRANCH=$1
+      else
+          echo "[ERROR] no branch specified." >&2
+          exit 1
+      fi
+      shift
+      ;;
+
+    --branch*)
+      ARG_BRANCH=${1#*=}
+      shift
+      ;;
+
+    -r)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_REMOTE=$1
+      else
+          echo "[ERROR] no remote specified." >&2
+          exit 1
+      fi
+      shift
+      ;;
+
+    --remote*)
+      ARG_REMOTE=${1#*=}
+      shift
+      ;;
+    
+    -f)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_FILTER=$1
+      else
+          echo "[ERROR] no filter specified." >&2
+          exit 1
+      fi
+      shift
+      ;;
+    
+    --filter*)
+      ARG_FILTER=${1#*=}
+      shift
+      ;;
+
+    -v|--version)
+      shift
+      echo $VERSION   
+      exit 0
+      ;;
+
+    --debug)
+      DEBUG=1
+      shift
+      ;;
+
+    *) 
+      break;
+      ;;
+  esac
+done
+
+
+# load configs
+function load_config() {
+    local folder=$1
+    if [ -n "$folder" ]; then
+        load_config ${folder%/*}
+        rc_path="${folder}/$RC_FILE_NAME"
+        if [ -f "${rc_path}" ]; then
+            if [ -n "$DEBUG" ]; then echo source $rc_path; fi >&2
+            source $rc_path
+        fi
+    fi
+}
+if [ "${PWD##$SCRIPT_DIR/}" == "$PWD" ]; then
+    load_config $SCRIPT_DIR
+fi
+if [ "${PWD##$HOME/}" == "$PWD" ]; then
+    load_config $HOME
+fi
+load_config $PWD
+
+
+### BRANCH
+if [ -n "$ARG_BRANCH" ]; then
+    BRANCH=$ARG_BRANCH
+fi
+BRANCH=${BRANCH:-development}
+
+### REMOTE
+REMOTE=${ARG_REMOTE:-$REMOTE}
+GIT_REMOTE=$(git remote get-url origin)
+REMOTE=${REMOTE:-$GIT_REMOTE}
+REMOTE=${REMOTE:-git@git.sbis.ru:mobileworkspace/ios-app}
+
+### FILTER
+FILTER=${ARG_FILTER:-$FILTER}
+FILTER=${FILTER/\*/[a-z_-]\\+}
+
+if [ -n "$DEBUG" ]; then
+    echo "SCRIPT_DIR  ┃ $SCRIPT_DIR" 
+    echo "SCRIPT_NAME ┃ $SCRIPT_NAME"
+    echo "VERSION     ┃ $VERSION"
+    echo "BRANCH      ┃ $BRANCH"
+    echo "REMOTE      ┃ $REMOTE"
+    echo "FILTER      ┃ $FILTER"
+    echo '$@          ┃ '"$@"
+fi >&2
+
+if [ -z "$REMOTE" ]; then
+    echo "[ERROR] no remote specified." >&2
+    exit 1
+fi
+
+if [ -n "$FILTER" ]; then
+    FILTER_GREPOPT='-v'
+fi
+
+git archive --remote=$REMOTE $BRANCH '*Podfile' | tar -xO | \
+grep '^\s*dependency.*\.\./\.\./' | sed "s/.*\.\.\/\.\.\///; s/'.*//" | sort -u | \
+grep $FILTER_GREPOPT "$FILTER"

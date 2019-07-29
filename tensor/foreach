@@ -1,0 +1,289 @@
+# self environment
+SCRIPT_DIR=$(dirname $0)
+SCRIPT_NAME=${0##*/}
+RC_FILE_NAME=".${SCRIPT_NAME}rc"
+
+# get version from git or hardcode
+pushd $SCRIPT_DIR > /dev/null
+VERSION=$(git describe --abbrev=0 --tags 2> /dev/null)
+VERSION=${VERSION:-1.1.0}
+popd > /dev/null
+
+# default prompt
+PROMPT=${PROMPT:-'$(ansicol white)with $(ansicol CYAN)$MODULE$(ansicol):'}
+
+# usage
+function usage() {
+    echo "$SCRIPT_NAME [options] command < modules.list
+
+options:
+-h, --help                 show brief help
+-b, --branch=BRANCH        specify a branch to switch
+-r, --remote=REMOTE        specify a remote URL to group with modules (workspace)
+-d, --workdir=WORKDIR      specify a directory with modules
+-v, --version              show version
+-p, --prompt=PROMPT        specify prompt, default: 'with $MODULE'
+
+# available vaiables:
+## sessional:
+BRANCH
+REMOTE
+PROMPT
+WORKDIR - workspace directory
+VERSION
+## for module current iteration:
+MODULE            - name (from input)
+MODULE_REMOTE     - expected remote URL 
+MODULE_ORIGIN     - git origin URL
+CURRENT_BRANCH    - git current branch
+"
+}
+
+
+# colorize
+declare -A ANSI_COLOR_MAP=(  \
+[black]='30'   [BLACK]='1;30' \
+[red]='31'     [RED]='1;31'    \
+[green]='32'   [GREEN]='1;32'   \
+[brown]='33'   [yellow]='1;33'   \
+[blue]='34'    [BLUE]='1;34'      \
+[purple]='35'  [PURPLE]='1;35'     \
+[magenta]='35' [MAGENTA]='1;35'     \
+[cyan]='36'    [CYAN]='1;36'         \
+[grey]='37'    [white]='1;37' )       #
+
+function ansicol() {
+    local key=${1:-X}
+    color=${ANSI_COLOR_MAP[$key]}
+    echo -e "\e[${color}m"
+}
+
+# highlight stderr
+function hlstderr() {
+    set -o pipefail;
+    eval "$@" 3>&1 1>&2 2>&3 3>&2 | while read line
+    do
+        shopt -s extglob
+        echo -e "\e[31m${line##*$0: line +([0-9]): }\e[m"
+        shopt -u extglob
+    done
+}
+
+
+
+# options selector
+while [[ $# -gt 0 ]]
+do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+
+    -b)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_BRANCH=$1
+      else
+          echo "$(ansicol red)[ERROR] no branch specified.$(ansicol)" >&2
+          exit 1
+      fi
+      shift
+      ;;
+
+    --branch*)
+      ARG_BRANCH=${1#*=}
+      shift
+      ;;
+
+    -r)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_REMOTE=$1
+      else
+          echo "$(ansicol red)[ERROR] no remote specified.$(ansicol)" >&2
+          exit 1
+      fi
+      shift
+      ;;
+
+    --remote*)
+      ARG_REMOTE=${1#*=}
+      shift
+      ;;
+
+
+    -d)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_WORKDIR=$1
+      else
+          echo "$(ansicol red)[ERROR] no workdir specified.$(ansicol)" >&2
+          exit 1
+      fi
+      shift
+      ;;
+
+    --workdir*)
+      ARG_WORKDIR=${1#*=}
+      shift
+      ;;
+
+    -p)
+      shift
+      if [[ $# -gt 0 ]]; then
+          ARG_PROMPT=$1
+      else
+          echo "$(ansicol red)[ERROR] no prompt specified.$(ansicol)" >&2
+          exit 1
+      fi
+      shift
+      ;;
+
+    --prompt*)
+      ARG_PROMPT=${1#*=}
+      shift
+      ;;
+
+
+    -v|--version)
+      shift
+      echo $VERSION   
+      exit 0
+      ;;
+
+    --debug)
+      DEBUG=1
+      shift
+      ;;
+
+    *) 
+      break;
+      ;;
+  esac
+done
+
+
+# load configs
+function load_config() {
+    local folder=$1
+    if [ -n "$folder" ]; then
+        load_config ${folder%/*}
+        rc_path="${folder}/$RC_FILE_NAME"
+        if [ -f "${rc_path}" ]; then
+            if [ -n "$DEBUG" ]; then echo source $rc_path; fi
+            source $rc_path
+        fi
+    fi
+}
+if [ "${PWD##$SCRIPT_DIR/}" == "$PWD" ]; then
+    load_config $SCRIPT_DIR
+fi
+if [ "${PWD##$HOME/}" == "$PWD" ]; then
+    load_config $HOME
+fi
+load_config $PWD
+if [ -n "$DEBUG" ]; then echo; fi
+
+
+# define environment
+### WORKDIR
+if [ -n "$ARG_WORKDIR" ]; then
+    WORKDIR=$(eval echo $ARG_WORKDIR)
+fi
+if [ -n "$WORKDIR" ]; then
+    if [ ! -d "$WORKDIR" ]; then
+        echo "$(ansicol red)[ERROR]$(ansicol) workdir '$(ansicol BLUE)$WORKDIR$(ansicol)' not found." >&2
+        exit 1
+    fi    
+    echo "WORKDIR: '$WORKDIR'"
+else
+    echo "WORKDIR: '$PWD'"
+fi
+
+### BRANCH
+if [ -n "$ARG_BRANCH" ]; then
+    BRANCH=$(eval echo $ARG_BRANCH)
+fi
+
+### REMOTE
+REMOTE=${ARG_REMOTE:-$REMOTE}
+
+### PROMPT
+PROMPT=${ARG_PROMPT:-$PROMPT}
+
+if [ -n "$DEBUG" ]; then
+    echo "SCRIPT_DIR  ┃ $SCRIPT_DIR" 
+    echo "SCRIPT_NAME ┃ $SCRIPT_NAME"
+    echo "VERSION     ┃ $VERSION"
+    echo "BRANCH      ┃ $BRANCH"
+    echo "REMOTE      ┃ $REMOTE"
+    MODULE=foreach-debug-module-name
+    eval echo $PROMPT
+    echo $@
+    echo
+fi
+
+if [[ -n "$WORKDIR" && "$WORKDIR" != "$PWD" ]]; then
+    WORKDIR_PUSHD=1
+    pushd $WORKDIR > /dev/null || exit 1
+fi
+
+if [ -z "$REMOTE" ]; then
+    echo "$(ansicol red)[ERROR] no remote specified.$(ansicol)" >&2
+    exit 1
+fi
+
+# main
+
+while read MODULE
+do
+    eval echo $PROMPT
+
+    MODULE_REMOTE=$REMOTE/${MODULE}.git
+ 
+    if [ ! -d "$MODULE" ]; then
+        ARG_BRANCH="-b ${BRANCH:-development}"
+        eval git clone --single-branch $ARG_BRANCH $MODULE_REMOTE || continue
+    fi
+ 
+    pushd $MODULE > /dev/null || continue
+    MODULE_ORIGIN=$(git remote get-url origin)
+    if [ "$MODULE_ORIGIN" != "$MODULE_REMOTE" ]; then
+        echo "$(ansicol yellow)[WARNING] $(ansicol white)origin$(ansicol)($(ansicol blue)$MODULE_ORIGIN$(ansicol)) != $(ansicol blue)$MODULE_REMOTE$(ansicol)"
+    fi
+    
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    if [ -n "$DEBUG" ]; then echo "CURRENT_BRANCH=$CURRENT_BRANCH"; fi
+
+    if [[ -n "$BRANCH" && "$BRANCH" != "$CURRENT_BRANCH" ]]; then
+        if [[ -n $(git ls-remote --heads origin $BRANCH) || -n $(git branch --list $BRANCH) ]]; then
+            git fetch
+            hlstderr git checkout $BRANCH || {
+                popd > /dev/null
+                echo
+                continue
+            }
+        else
+            echo "$(ansicol red)[ERROR] $(ansicol)Remote branch $(ansicol yellow)$BRANCH$(ansicol) not found in upstream $(ansicol blue)$MODULE_REMOTE$(ansicol)"
+            popd > /dev/null
+            echo
+            continue
+        fi
+    fi
+
+    if [[ $# -gt 0 ]]; then
+        hlstderr "$@"
+    else
+        echo --
+    fi
+
+    popd > /dev/null
+    echo
+done
+
+if [ $WORKDIR_PUSHD ]; then
+    popd > /dev/null
+fi
+
+exit 0

@@ -1,0 +1,38 @@
+SCRIPT_PATH=${1:-'$HOME/.scripts'}
+SCRIPT_PATH_EVAL=$(eval echo $SCRIPT_PATH)
+[ -d "$SCRIPT_PATH_EVAL" ] || mkdir $SCRIPT_PATH_EVAL || exit 1
+
+remote=git@git.sbis.ru:sa.pletnev/scripts.git
+version=$(git ls-remote --tags $remote | sed 's|.*/||g' | sort | tail -1)
+
+git archive --remote="$remote" $version foreach | tar -x -C "$SCRIPT_PATH_EVAL"
+git archive --remote="$remote" $version dependencies | tar -x -C "$SCRIPT_PATH_EVAL"
+
+SCRIPT_PATH_PTRN=$SCRIPT_PATH
+
+if $(echo ${SCRIPT_PATH} | grep -q '^\(~/\|$HOME/\|'"$HOME"'/\)\([a-zA-Z._-]\+/\?\)\+$'); then
+    SCRIPT_PATH_TRIM=${SCRIPT_PATH##\$HOME}
+    SCRIPT_PATH_TRIM=${SCRIPT_PATH_TRIM##$HOME}
+    SCRIPT_PATH_TRIM=${SCRIPT_PATH_TRIM##\~}
+    SCRIPT_PATH_PTRN='\(~/\|$HOME\|'"$HOME"'\)'"$SCRIPT_PATH_TRIM"
+    SCRIPT_PATH='$HOME'"$SCRIPT_PATH_TRIM"
+fi
+
+{
+
+echo
+echo
+echo '# tensor'
+
+if ! $(grep -q 'export PATH=\("\|'"'"'\)\?\($PATH:\)\?\(\(~/\|$HOME/\)\([a-zA-Z._-]\+/\?\):\)*'"${SCRIPT_PATH_PTRN}"'\(\(:\(~/\|\$HOME/\)\([a-zA-Z._-]\+/\?\)\)+\|\("\|'"'"'\)\|;\|\s*$\)' $HOME/.bash_profile); then
+    echo  'export PATH="$PATH:'"$SCRIPT_PATH"'"'
+fi
+
+echo "
+alias gitbranch='git rev-parse --abbrev-ref HEAD'
+alias tensor_depends='dependencies -b "'$(gitbranch)'" -f ^sbis-*-controller'
+alias tensor_foreach='tensor_depends | foreach -b "'$(gitbranch)'"'
+"
+
+} >> $HOME/.bash_profile
+
