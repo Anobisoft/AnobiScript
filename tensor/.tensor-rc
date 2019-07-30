@@ -1,0 +1,18 @@
+function tensor_rc() {
+    local folder=$1
+    if [ -n "$folder" ]; then
+        tensor_rc ${folder%/*}
+        rc_path="${folder}/$RC_FILE_NAME"
+        if [ -f "${rc_path}" ]; then
+            if [ -n "$DEBUG" ]; then echo source $rc_path; fi >&2
+            source $rc_path
+        fi
+    fi
+}
+if [ "${PWD##$SCRIPT_DIR/}" == "$PWD" ]; then
+    tensor_rc $SCRIPT_DIR
+fi
+if [ "${PWD##$HOME/}" == "$PWD" ]; then
+    tensor_rc $HOME
+fi
+tensor_rc $PWD

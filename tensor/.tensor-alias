@@ -1,0 +1,3 @@
+alias gitbranch='git rev-parse --abbrev-ref HEAD'
+alias tensor_depends='dependencies -b $(gitbranch) -f ^sbis-*-controller'
+alias tensor_foreach='tensor_depends | foreach -b $(gitbranch)'

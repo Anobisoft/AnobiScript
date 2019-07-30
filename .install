@@ -6,7 +6,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 brew install bash gawk diffutils wget coreutils findutils grep gnu-sed binutils curl
 
 # Bash
-sudo bash -c '[ "$(grep -c '^/usr/local/bin/bash$' /etc/shells)" -eq 0 ] && echo /usr/local/bin/bash >> /etc/shells'
+sudo bash -c 'if ! $(grep -q "^/usr/local/bin/bash$" /etc/shells); then echo /usr/local/bin/bash >> /etc/shells; fi'
 chsh -s /usr/local/bin/bash
 
 # RVM
@@ -18,12 +18,13 @@ rvm install --quiet-curl ruby-2.6.3 && rvm use ruby-2.6.3 --default
 gem install cocoapods
 
 # AnobiScript
-eval git clone git@github.com:Anobisoft/AnobiScript.git "$SCRIPTS_DIR" && \
-[ "$(grep -c '.anobi_profile' ~/.bash_profile)" -eq 0 ] && echo -e '
+eval git clone git@github.com:Anobisoft/AnobiScript.git "$ANOBISCRIPT" && \
+if ! $(grep -q '^source .anobi_profile$' ~/.bash_profile); then
+    echo -e '
 export PATH="$PATH:'"$ANOBISCRIPT"'"
 source .anobi_profile
 ' >> $HOME/.bash_profile
+fi
 
-eval $ANOBISCRIPT/.brewprefix >> $HOME/.bash_profile
-
-ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+eval $ANOBISCRIPT/.brewfix >> $HOME/.bash_profile
+eval ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml

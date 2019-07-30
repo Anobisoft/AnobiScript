@@ -1,0 +1,29 @@
+# colorize
+declare -A ANSI_COLOR_MAP=(  \
+[black]='30'   [BLACK]='1;30' \
+[red]='31'     [RED]='1;31'    \
+[green]='32'   [GREEN]='1;32'   \
+[brown]='33'   [yellow]='1;33'   \
+[blue]='34'    [BLUE]='1;34'      \
+[purple]='35'  [PURPLE]='1;35'     \
+[magenta]='35' [MAGENTA]='1;35'     \
+[cyan]='36'    [CYAN]='1;36'         \
+[grey]='37'    [white]='1;37' )       #
+
+function ansicol() {
+    local key=${1:-X}
+    color=${ANSI_COLOR_MAP[$key]}
+    echo -e "\e[${color}m"
+}
+
+# highlight stderr
+function hlstderr() {
+    set -o pipefail;
+    eval "$@" 3>&1 1>&2 2>&3 3>&2 | while read line
+    do
+        shopt -s extglob
+        echo -e "\e[31m${line##*$0: line +([0-9]): }\e[m"
+        shopt -u extglob
+    done
+}
+

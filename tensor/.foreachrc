@@ -1,0 +1,3 @@
+REMOTE=git@git.sbis.ru:mobileworkspace
+WORKDIR=$HOME/Projects
+PROMPT='$(ansicol GREEN)$(date +%T)$(ansicol) -- $(ansicol white)for$(ansicol) [$(ansicol magenta)$MODULE$(ansicol)]$(if [ $BRANCH ]; then echo " checkout $(ansicol yellow)$BRANCH$(ansicol)"; fi):'
