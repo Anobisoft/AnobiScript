@@ -1,0 +1,10 @@
+.dependenciesrc
+.foreachrc
+.tensor-alias
+.tensor-colorize
+.tensor-environment
+.tensor-opt
+.tensor-rc
+.tensor-version
+dependencies
+foreach
