@@ -17,14 +17,22 @@ source $HOME/.rvm/scripts/rvm
 rvm install --quiet-curl ruby-2.6.3 && rvm use ruby-2.6.3 --default
 gem install cocoapods
 
+# GitHub check ssh
+if [ ! $(ls $HOME/.ssh/*.pub 2> /dev/null) ]; then
+  open 'https://github.com/settings/keys'
+  open 'https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent'
+  read -p 'Press enter to continue'
+fi
+
 # AnobiScript
-eval git clone git@github.com:Anobisoft/AnobiScript.git "$ANOBISCRIPT" && \
-if ! $(grep -q '^source .anobi_profile$' ~/.bash_profile); then
+eval git clone git@github.com:Anobisoft/AnobiScript.git "$ANOBISCRIPT" && {
+  if ! $(grep -q '^source .anobi_profile$' ~/.bash_profile); then
     echo -e '
 export PATH="$PATH:'"$ANOBISCRIPT"'"
 source .anobi_profile
 ' >> $HOME/.bash_profile
-fi
-
-eval $ANOBISCRIPT/.brewfix >> $HOME/.bash_profile
-eval ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+  fi
+  eval $ANOBISCRIPT/.brewfix >> $HOME/.bash_profile
+  eval ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+  eval ln -f $ANOBISCRIPT/.config/com.apple.Terminal.plist $HOME/Library/Preferences/com.apple.Terminal.plist
+}
