@@ -3,3 +3,5 @@ source .functions
 source .aliases
 source .curl_templates
 
+defaults write com.apple.dt.xcode AppleICUDateFormatStrings '{ 1 = "yyyy-MM-dd"; }'
+
