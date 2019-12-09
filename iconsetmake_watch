@@ -2,8 +2,8 @@
 #  iconsetwith1024ios
 #  AnobiScript
 #
-#  Created by Stanislav Pletnev on 2017-05-16
-#  Copyright © 2017 Anobisoft. All rights reserved.
+#  Created by Stanislav Pletnev on 2018-12-27
+#  Copyright © 2018 Anobisoft. All rights reserved.
 #
 
 [ ${BASH_VERSINFO[0]} -ge "4" ] || { echo 'ERROR(8) bash 4 needed' 1>&2; exit 4; }
@@ -13,9 +13,6 @@ scriptname=${0##*/}
 
 [ "$1" ] && sourcepath=$1 || { echo "Usage: ${scriptname} [1024x1024 PNG FILE]"; exit 1; }
 [ -e $sourcepath ] || { echo "ERROR(2) file not found ($1)"; exit 2; } 
-pixelHeight=$(sips -g pixelHeight $sourcepath | tail -1 | grep -c "[^0-9]1024$")
-pixelWidth=$(sips -g pixelWidth $sourcepath | tail -1 | grep -c "[^0-9]1024$")
-[ "$((${pixelHeight}+${pixelWidth}))" -eq 2 ] || { echo "ERROR(3) Image size must be 1024x1024"; exit 3; }
 
 
 logfile=${scriptname}.log
@@ -29,14 +26,14 @@ filename=${sourcepath##*/}
 fname=${filename%.*}
 fext=${filename#*.}
 
-targetdir=$sourcedir/iOSappiconset/AppIcon.appiconset
+targetdir=$sourcedir/watchOSappiconset/AppIcon.appiconset
 mkdir -p $targetdir
 
-cp ${0%/*}/iconset_json_iOS/Contents.json $targetdir
+cp ${0%/*}/iconset_json_watch/Contents.json $targetdir
 
-icn1x=( 20 29 40 76 )
-icn2x=( 20 29 40 76 83.5 )
-icn3x=( 20 29 40 60 )
+icn1x=( 1024 )
+icn2x=( 24 27.5 29 40 44 50 86 98 108 )
+icn3x=( 29 )
 
 declare -A sizes
 sizes[1]=${icn1x[@]}
@@ -55,8 +52,6 @@ do
     sips -z $sz $sz --matchTo '/System/Library/ColorSync/Profiles/sRGB Profile.icc' $sourcepath --out $targetdir/AppIcon-${sz}x${sz}.$fext
 done
 
-cp $sourcepath $targetdir/ios-marketing1024.png
-
 echo
 echo "$targetdir"
 ls -lh $targetdir
@@ -65,3 +60,4 @@ ls -lh $targetdir
 
 echo -n 'OK '
 wc -c $logfile
+
