@@ -41,6 +41,8 @@ sizes[1]=${icn1x[@]}
 sizes[2]=${icn2x[@]}
 sizes[3]=${icn3x[@]}
 
+convert $sourcepath -background white -alpha remove -alpha off $sourcepath
+
 for i in "${!sizes[@]}"
 do
     isz=${sizes[$i]}

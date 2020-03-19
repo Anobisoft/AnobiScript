@@ -13,5 +13,5 @@ export CURL_WOUT_FORMAT_TIMINGS='\n
          time_total:  %{time_total}\n'
 
 alias curlog='curl -vskL -w"$CURL_WOUT_FORMAT_TIMINGS" -H "$HEADER_CONTENT_JSON" -H "$HEADER_ACCEPT_JSON"'
-alias curlapi='curlog -H "token: $HEADER_TOKEN"'
+alias curlapi='curlog -H "Authorization: $HEADER_TOKEN"'
 
