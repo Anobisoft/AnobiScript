@@ -30,7 +30,7 @@ function pod_trunk_delete_all_force() {
     return 1
   fi
 
-  master_versions_string=$(echo $versions_string | grep -oE "(${anobi_version_regexp}, )*${anobi_version_regexp} \[master repo\]")
+  master_versions_string=$(echo $versions_string | grep -oE "(${anobi_version_regexp}, )*${anobi_version_regexp} \[trunk repo\]")
   master_versions=$(echo $master_versions_string | grep -oE $anobi_version_regexp)
   positive "Versions: $master_versions_string"
   echo "$master_versions" | while read version
