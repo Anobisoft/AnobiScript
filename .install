@@ -14,7 +14,7 @@ curl -sSL https://get.rvm.io | bash -s stable
 source $HOME/.rvm/scripts/rvm
 
 # Ruby
-rvm install --quiet-curl ruby-2.7.0 && rvm use ruby-2.7.0 --default
+rvm install --quiet-curl ruby-2.6.6 && rvm use ruby-2.6.6 --default
 gem install cocoapods
 
 # GitHub check ssh
