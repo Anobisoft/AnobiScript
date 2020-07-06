@@ -21,7 +21,7 @@ gem install cocoapods
 if [ ! $(ls $HOME/.ssh/*.pub 2> /dev/null) ]; then
   open 'https://github.com/settings/keys'
   open 'https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent'
-  read -p 'Press enter to continue'
+  read -p 'Setup your ssh keys, than press enter to continue'
 fi
 
 # AnobiScript
@@ -33,6 +33,7 @@ source .anobi_profile
 ' >> $HOME/.bash_profile
   fi
   eval $ANOBISCRIPT/.brewfix >> $HOME/.bash_profile
-  eval ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+  #eval ln -f $ANOBISCRIPT/.config/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+  eval cp $ANOBISCRIPT/.vimrc $HOME
   eval ln -f $ANOBISCRIPT/.config/com.apple.Terminal.plist $HOME/Library/Preferences/com.apple.Terminal.plist
 }
